@@ -9,6 +9,7 @@ export const addProductAPI = async (productData) => {
     throw err;
   }
 };
+
 export const getProductsAPI = async () => {
   try {
     const res = await axios.get("/products");
@@ -18,4 +19,3 @@ export const getProductsAPI = async () => {
     throw err;
   }
 };
-

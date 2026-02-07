@@ -17,6 +17,7 @@ export const declineShop = (id, token) =>
   axios.put(`${API}/admin/decline/${id}`, {}, {
     headers: { Authorization: `Bearer ${token}` },
   });
+
 export const getApprovedShops = (token) =>
   axios.get(`${API}/admin/vendors/approved`, {
     headers: { Authorization: `Bearer ${token}` },

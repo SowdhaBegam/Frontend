@@ -15,10 +15,9 @@ export default function Dashboard() {
     try {
       const res = await axios.get("/shop/orders");
 
-      // 🔍 Debug safety (remove later)
+      // debug
       console.log("Dashboard Orders 👉", res.data);
 
-      // Ensure array
       if (Array.isArray(res.data)) {
         setOrders(res.data);
       } else {
@@ -89,24 +88,22 @@ export default function Dashboard() {
       </div>
 
       {/* ================= ORDERS ================= */}
-    <div className="order-grid">
-  {activeOrders.length === 0 ? (
-    <p>No active orders</p>
-  ) : (
-    activeOrders.map((order) => (
-      <OrderCard
-        key={order.id}
-        id={order.id}
-        name={order.customer_name || "Unknown"}
-        amount={order.total_amount || 0}
-        statusFromDB={order.status}
-        items={order.items}  
-      />
-    ))
-  )}
-</div>
-
-
+      <div className="order-grid">
+        {activeOrders.length === 0 ? (
+          <p>No active orders</p>
+        ) : (
+          activeOrders.map((order) => (
+            <OrderCard
+              key={order.id}
+              id={order.id}
+              name={order.customer_name || "Unknown"}
+              amount={order.total_amount || 0}
+              statusFromDB={order.status}
+              items={order.items}
+            />
+          ))
+        )}
+      </div>
     </>
   );
 }

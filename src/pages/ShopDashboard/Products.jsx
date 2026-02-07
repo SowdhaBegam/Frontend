@@ -20,7 +20,7 @@ export default function Products() {
     }
   };
 
-  // 🔥 AFTER ADDING PRODUCT → RELOAD FROM BACKEND
+  // AFTER ADDING PRODUCT → reload
   const addProduct = async () => {
     await loadProducts();
     setOpenModal(false);
@@ -50,24 +50,23 @@ export default function Products() {
         )}
 
         {products.map((p) => (
-  <div key={p.id} className="product-card">
-    <img
-      src={`https://mc-platform-3zu9n1qmr-sangeetha-lakshmis-projects.vercel.app/uploads/${p.image}`}
-      alt={p.name}
-    />
+          <div key={p.id} className="product-card">
+            <img
+              src={`https://mc-platform-3zu9n1qmr-sangeetha-lakshmis-projects.vercel.app/uploads/${p.image}`}
+              alt={p.name}
+            />
 
-    <div className="product-info">
-      <h4>{p.name}</h4>
+            <div className="product-info">
+              <h4>{p.name}</h4>
 
-      <strong>₹{p.final_price}</strong>
+              <strong>₹{p.final_price}</strong>
 
-      <div className={`live-badge ${p.is_live ? "live" : "off"}`}>
-        {p.is_live ? "LIVE" : "OFF"}
-      </div>
-    </div>
-  </div>
-))}
-
+              <div className={`live-badge ${p.is_live ? "live" : "off"}`}>
+                {p.is_live ? "LIVE" : "OFF"}
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
       <NewProductModal

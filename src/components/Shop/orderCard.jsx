@@ -79,7 +79,7 @@ export default function OrderCard({
   const handleDecline = async () => {
     try {
       setLoading(true);
-      await completeOrder(id); // or create decline API
+      await completeOrder(id); // change if decline API exists
       setStatus("completed");
     } catch (err) {
       console.log(err);

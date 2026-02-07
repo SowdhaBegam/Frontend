@@ -13,7 +13,7 @@ export default function Orders() {
     try {
       const res = await axios.get("/shop/orders");
 
-      // ✅ only completed orders
+      // only completed orders
       const completedOrders = res.data.filter(
         (order) => order.status === "completed"
       );
@@ -68,7 +68,7 @@ export default function Orders() {
                 </span>
 
                 <div className="handled">
-                   ORDER COMPLETED
+                  ORDER COMPLETED
                 </div>
               </div>
             </div>

@@ -65,7 +65,6 @@ export default function Navbar() {
           {/* STATUS TOGGLE */}
           <div className="flex items-center gap-3 text-xs w-[150px] justify-end">
 
-            {/* toggle */}
             <div
               onClick={() => setShopActive(!shopActive)}
               className={`w-11 h-6 flex items-center rounded-full p-1 cursor-pointer transition-all duration-300
@@ -81,7 +80,6 @@ export default function Navbar() {
               />
             </div>
 
-            {/* text */}
             <span
               className={`font-medium w-[65px] ${
                 shopActive

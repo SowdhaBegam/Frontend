@@ -2,7 +2,6 @@ import { useState } from "react";
 import "../../styles/Shop/newProductModal.css";
 import { addProductAPI } from "../../services/productService";
 
-
 export default function NewProductModal({ open, onClose, onDeploy }) {
   const [image, setImage] = useState(null);
   const [name, setName] = useState("");
@@ -14,38 +13,36 @@ export default function NewProductModal({ open, onClose, onDeploy }) {
   const [type, setType] = useState("veg");
   const [category, setCategory] = useState("Food");
 
-
   if (!open) return null;
 
   const finalPrice = base - (rebate || 0);
 
   const deploy = async () => {
-  if (!name || !base) return alert("Fill required fields");
+    if (!name || !base) return alert("Fill required fields");
 
-  const payload = {
-    name,
-    description: desc,
-    image,
-    price: Number(base),
-    discount: Number(rebate || 0),
-    stock: Number(stock),
-    is_live: true,
-    prep_time: Number(time),
-    food_type: type === "veg" ? "VEG" : "NON-VEG",
-    category, // default until you connect dropdown
+    const payload = {
+      name,
+      description: desc,
+      image,
+      price: Number(base),
+      discount: Number(rebate || 0),
+      stock: Number(stock),
+      is_live: true,
+      prep_time: Number(time),
+      food_type: type === "veg" ? "VEG" : "NON-VEG",
+      category,
+    };
+
+    try {
+      const res = await addProductAPI(payload);
+      alert("✅ Product Added Successfully!");
+      onDeploy();
+      onClose();
+    } catch (error) {
+      console.error(error);
+      alert("❌ Failed to add product");
+    }
   };
-
-  try {
-    const res = await addProductAPI(payload);
-    alert("✅ Product Added Successfully!");
-
-    onDeploy(); // 🔥 THIS SENDS PRODUCT TO PRODUCTS PAGE
-    onClose();
-  } catch (error) {
-    console.error(error);
-    alert("❌ Failed to add product");
-  }
-};
 
   return (
     <div className="big-modal-overlay">
@@ -83,17 +80,16 @@ export default function NewProductModal({ open, onClose, onDeploy }) {
 
             <h4>CATEGORY</h4>
             <select
-  className="category"
-  value={category}
-  onChange={(e) => setCategory(e.target.value)}
->
-  <option value="Food">🍔 Food</option>
-  <option value="Grocery">🛒 Grocery</option>
-  <option value="Pharmacy">💊 Pharmacy</option>
-  <option value="Electronics">📱 Appliances & Electronics</option>
-  <option value="Cosmetics">💄 Cosmetics</option>
-</select>
-
+              className="category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="Food">🍔 Food</option>
+              <option value="Grocery">🛒 Grocery</option>
+              <option value="Pharmacy">💊 Pharmacy</option>
+              <option value="Electronics">📱 Appliances & Electronics</option>
+              <option value="Cosmetics">💄 Cosmetics</option>
+            </select>
 
             <h4>PROFILE & NARRATIVE</h4>
             <input
@@ -110,21 +106,49 @@ export default function NewProductModal({ open, onClose, onDeploy }) {
 
             <h4>FINANCIAL STRATEGY</h4>
             <div className="row">
-              <input placeholder="Base MRP ₹" value={base} onChange={(e)=>setBase(e.target.value)} />
-              <input placeholder="Net Rebate ₹" value={rebate} onChange={(e)=>setRebate(e.target.value)} />
-              <input className="final-price" value={`₹ ${finalPrice || 0}`} disabled />
+              <input
+                placeholder="Base MRP ₹"
+                value={base}
+                onChange={(e)=>setBase(e.target.value)}
+              />
+              <input
+                placeholder="Net Rebate ₹"
+                value={rebate}
+                onChange={(e)=>setRebate(e.target.value)}
+              />
+              <input
+                className="final-price"
+                value={`₹ ${finalPrice || 0}`}
+                disabled
+              />
             </div>
 
             <h4>INVENTORY LOGIC</h4>
             <div className="row">
-              <input value={stock} onChange={(e)=>setStock(e.target.value)} />
-              <input value={time} onChange={(e)=>setTime(e.target.value)} />
+              <input
+                value={stock}
+                onChange={(e)=>setStock(e.target.value)}
+              />
+              <input
+                value={time}
+                onChange={(e)=>setTime(e.target.value)}
+              />
             </div>
 
             <h4>CATEGORY SETTINGS</h4>
             <div className="toggle">
-              <button className={type==="veg" ? "active":""} onClick={()=>setType("veg")}>VEG</button>
-              <button className={type==="nonveg" ? "active":""} onClick={()=>setType("nonveg")}>NON-VEG</button>
+              <button
+                className={type==="veg" ? "active":""}
+                onClick={()=>setType("veg")}
+              >
+                VEG
+              </button>
+              <button
+                className={type==="nonveg" ? "active":""}
+                onClick={()=>setType("nonveg")}
+              >
+                NON-VEG
+              </button>
             </div>
 
           </div>
@@ -132,7 +156,9 @@ export default function NewProductModal({ open, onClose, onDeploy }) {
 
         <div className="big-footer">
           <button className="cancel" onClick={onClose}>Cancel</button>
-          <button className="deploy" onClick={deploy}>UPDATE PRODUCT DETAILS</button>
+          <button className="deploy" onClick={deploy}>
+            UPDATE PRODUCT DETAILS
+          </button>
         </div>
 
       </div>
